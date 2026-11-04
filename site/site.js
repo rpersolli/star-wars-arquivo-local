@@ -1,5 +1,5 @@
-import {openBook} from './book-reader.js';
-import {mountMap} from './galaxy-map.js';
+import {openBook} from './book-reader.js?v=1.0.1.1';
+import {mountMap} from './galaxy-map.js?v=1.0.1.1';
 let disposeMap=null;
 import * as pdfjs from './vendor/pdf.mjs';
 pdfjs.GlobalWorkerOptions.workerSrc='./vendor/pdf.worker.mjs';
@@ -73,6 +73,6 @@ const chapters=[["Criação de personagens", 13], ["Habilidades", 16], ["Espéci
 function showChapters(){let el=$('#chapter-picker');if(!el){el=document.createElement('select');el.id='chapter-picker';el.setAttribute('aria-label','Ir ao capítulo');$('#reader-left').append(el);el.onchange=run(async()=>{if(!el.value)return;pageNo=Number(el.value);await render()})}el.hidden=active.id!=='saga';el.innerHTML='<option value="">Ir ao capítulo…</option>'+chapters.map(([title,page])=>`<option value="${page+1}">${E(title)} · p. ${page}</option>`).join('')}
 
 
-try{const r=await fetch('catalog.json');if(r.ok)catalog=await r.json();await route()}catch(e){app.innerHTML=heading('ARQUIVO','Não foi possível abrir a biblioteca.',E(e.message)+' Recarregue a página.');}
+try{const r=await fetch('catalog.json?v=1.0.1.1');if(r.ok)catalog=await r.json();await route()}catch(e){app.innerHTML=heading('ARQUIVO','Não foi possível abrir a biblioteca.',E(e.message)+' Recarregue a página.');}
 
 function confirmAction(message){return new Promise(resolve=>{const d=document.createElement('dialog');d.className='confirm-dialog';d.innerHTML='<form method="dialog"><h2>Confirmar ação</h2><p></p><div class="actions"><button value="cancel">Cancelar</button><button value="yes" class="primary">Confirmar</button></div></form>';d.querySelector('p').textContent=message;d.onclose=()=>{const answer=d.returnValue==='yes';d.remove();resolve(answer)};document.body.append(d);d.showModal()})}

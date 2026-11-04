@@ -72,7 +72,7 @@ export function mountMap(app,{toast,confirmAction}){
   $('#map-backup').onclick=()=>download(new Blob([JSON.stringify({version:1,objects},null,2)],{type:'application/json'}),'mapa-da-campanha.json');
   $('#map-import').onclick=()=>$('#map-file').click();$('#map-file').onchange=safe(async e=>{const f=e.target.files[0];if(!f)return;if(f.size>15*1024*1024)throw Error('Backup muito grande (máximo 15 MB).');const next=validate(JSON.parse(await f.text()));if(!await confirmAction('Substituir as marcações pelo backup? Você poderá desfazer esta ação.'))return;snapshot();objects=next;selected=-1;change();e.target.value=''});
   $('#map-clear').onclick=async()=>{if(!objects.length)return;if(!await confirmAction('Remover todas as marcações? A imagem original será mantida e você poderá desfazer.'))return;snapshot();objects=[];selected=-1;change()};
-  bg.onload=()=>{ready=true;canvas.width=bg.naturalWidth;canvas.height=bg.naturalHeight;fit(true);draw();refresh();status(objects.length+' marcações · escolha uma ferramenta para começar.')};bg.onerror=()=>status('Não foi possível carregar a imagem do mapa. Recarregue a página.');bg.src='assets/galaxy-map.png';
+  bg.onload=()=>{ready=true;canvas.width=bg.naturalWidth;canvas.height=bg.naturalHeight;fit(true);draw();refresh();status(objects.length+' marcações · escolha uma ferramenta para começar.')};bg.onerror=()=>status('Não foi possível carregar a imagem do mapa. Recarregue a página.');bg.src='assets/galaxy-map.png?v=1.0.1.1';
   const observer=new ResizeObserver(()=>fit());observer.observe(view);
   return ()=>{clearTimeout(saveTimer);save();observer.disconnect();bg.onload=null};
 }
