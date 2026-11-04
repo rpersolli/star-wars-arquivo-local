@@ -1,0 +1,40 @@
+name: Publicar Holoarquivo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Importar pacote inicial e criar branch de versão
+        shell: bash
+        run: |
+          if [ -f project-source.zip ]; then
+            python3 -c "import zipfile; zipfile.ZipFile('project-source.zip').extractall('.')"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git rm project-source.zip
+            git add site server.cjs Iniciar.cmd Iniciar-na-rede.cmd README.md LEIA-ME.md VERIFICACAO.md .gitignore
+            git commit -m "Import complete Holoarchive source 1.0.0"
+            git push origin HEAD:main
+            git push origin HEAD:refs/heads/1.0.0
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
