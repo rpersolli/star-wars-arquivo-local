@@ -1,1 +1,135 @@
-[{"id": "saga", "title": "Livro de regras · Saga Edition", "kind": "Livro", "pages": 288, "file": "Star Wars - Livro.pdf", "cover": "assets/saga.png"}, {"id": "ficha", "title": "Ficha de personagem · Saga Edition", "kind": "Ficha", "pages": 2, "file": "star-wars-rpg-edicao-saga-ficha.pdf", "cover": "assets/ficha.png"}]
+[
+  {
+    "id": "saga",
+    "title": "Livro de regras · Saga Edition",
+    "kind": "Livro",
+    "pages": 288,
+    "file": "Star Wars - Livro.pdf",
+    "cover": "assets/saga.png"
+  },
+  {
+    "id": "ficha",
+    "title": "Ficha de personagem · Saga Edition",
+    "kind": "Ficha",
+    "pages": 2,
+    "file": "star-wars-rpg-edicao-saga-ficha.pdf",
+    "cover": "assets/ficha.png"
+  },
+  {
+    "id": "intrigue",
+    "title": "Galaxy of Intrigue",
+    "kind": "Livro",
+    "pages": 226,
+    "file": "Galaxy-of-Intrigue.pdf",
+    "cover": "assets/intrigue.jpg",
+    "parts": [
+      "intrigue.pdf.part1",
+      "intrigue.pdf.part2",
+      "intrigue.pdf.part3",
+      "intrigue.pdf.part4",
+      "intrigue.pdf.part5"
+    ]
+  },
+  {
+    "id": "kotor",
+    "title": "Knights of the Old Republic Campaign Guide",
+    "kind": "Livro",
+    "pages": 226,
+    "file": "knights_of_the_old_republic_campaign_guide.pdf",
+    "cover": "assets/kotor.jpg"
+  },
+  {
+    "id": "unknown-regions",
+    "title": "The Unknown Regions",
+    "kind": "Livro",
+    "pages": 226,
+    "file": "saga-edition-unknown-regions-pr.pdf",
+    "cover": "assets/unknown-regions.jpg"
+  },
+  {
+    "id": "droids",
+    "title": "Scavenger’s Guide to Droids",
+    "kind": "Livro",
+    "pages": 162,
+    "file": "Scavengers_guide_to_droids.pdf",
+    "cover": "assets/droids.jpg"
+  },
+  {
+    "id": "clone-wars",
+    "title": "The Clone Wars Campaign Guide",
+    "kind": "Livro",
+    "pages": 225,
+    "file": "SW_Saga_Clone_Wars_Campaign_Guide.pdf",
+    "cover": "assets/clone-wars.jpg"
+  },
+  {
+    "id": "galaxy-at-war",
+    "title": "Galaxy at War",
+    "kind": "Livro",
+    "pages": 225,
+    "file": "SW_Saga_Galaxy_at_War.pdf",
+    "cover": "assets/galaxy-at-war.jpg"
+  },
+  {
+    "id": "galaxy-tiles",
+    "title": "Galaxy Tiles",
+    "kind": "Livro",
+    "pages": 16,
+    "file": "SW_Saga_Galaxy_Tiles.pdf",
+    "cover": "assets/galaxy-tiles.jpg"
+  },
+  {
+    "id": "jedi-academy",
+    "title": "Jedi Academy Training Manual",
+    "kind": "Livro",
+    "pages": 161,
+    "file": "SW_Saga_Jedi_Academy_Training_Manual.pdf",
+    "cover": "assets/jedi-academy.jpg"
+  },
+  {
+    "id": "legacy",
+    "title": "Legacy Era Campaign Guide",
+    "kind": "Livro",
+    "pages": 225,
+    "file": "SW_Saga_Legacy_Era_Campaign_Guide.pdf",
+    "cover": "assets/legacy.jpg"
+  },
+  {
+    "id": "rebellion",
+    "title": "Rebellion Era Campaign Guide",
+    "kind": "Livro",
+    "pages": 161,
+    "file": "SW_Saga_Rebellion_Era_Campaign_Guide.pdf",
+    "cover": "assets/rebellion.jpg"
+  },
+  {
+    "id": "starships",
+    "title": "Starships of the Galaxy",
+    "kind": "Livro",
+    "pages": 165,
+    "file": "SW_Saga_Starships_of_the_Galaxy.pdf",
+    "cover": "assets/starships.jpg"
+  },
+  {
+    "id": "force-unleashed",
+    "title": "The Force Unleashed Campaign Guide",
+    "kind": "Livro",
+    "pages": 228,
+    "file": "SW_Saga_TFU_Campaign_Guide.pdf",
+    "cover": "assets/force-unleashed.jpg"
+  },
+  {
+    "id": "threats",
+    "title": "Threats of the Galaxy",
+    "kind": "Livro",
+    "pages": 162,
+    "file": "SWD20 (Saga) - Threats of the Galaxy.pdf",
+    "cover": "assets/threats.jpg",
+    "parts": [
+      "threats.pdf.part1",
+      "threats.pdf.part2",
+      "threats.pdf.part3",
+      "threats.pdf.part4"
+    ]
+  }
+]
