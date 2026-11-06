@@ -43,28 +43,19 @@ export async function openBook(book, searchInfo, {toast, bytesOf}) {
     if(id!==renderId||closed)return;
     spread.replaceChildren(...next.childNodes);update();
   }
-  async function go(target,animate=true){
+  async function go(target){
     if(!doc||busy||closed)return;
     const next=Math.min(doc.numPages,Math.max(1,target));if(next===page)return;
-    const direction=next>page?1:-1;
-    busy=true;let ghost;
-    try{
-      if(animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.documentElement.classList.contains('reduce-motion')&&zoom===1){
-        const old=spread.querySelector(direction>0?'.flip-leaf:last-child':'.flip-leaf:first-child');
-        if(old){ghost=document.createElement('canvas');const c=old.querySelector('canvas');ghost.width=c.width;ghost.height=c.height;ghost.getContext('2d').drawImage(c,0,0);ghost.className='flip-ghost';const r=old.getBoundingClientRect(),vr=view.getBoundingClientRect();Object.assign(ghost.style,{left:r.left-vr.left+view.scrollLeft+'px',top:r.top-vr.top+view.scrollTop+'px',width:r.width+'px',height:r.height+'px',transformOrigin:direction>0?'left center':'right center'});view.append(ghost)}
-      }
-      page=next;await paint();
-      if(ghost){const a=ghost.animate([{transform:'rotateY(0deg)',filter:'brightness(1)'},{transform:`rotateY(${direction*-88}deg)`,filter:'brightness(.55)'}],{duration:420,easing:'ease-in-out',fill:'forwards'});await a.finished.catch(()=>{})}
-      view.scrollTo(0,0);
-    } finally{ghost?.remove();busy=false}
+    busy=true;try{page=next;await paint();view.scrollTo(0,0)}finally{busy=false}
   }
   const turn=direction=>go(direction>0?page+pageList().length:(dual()?(page<=2?1:page-2):page-1));
   $('[data-prev]').onclick=safe(()=>turn(-1));$('[data-next]').onclick=safe(()=>turn(1));
   $('[data-first]').onclick=safe(()=>go(1));$('[data-last]').onclick=safe(()=>go(doc.numPages));
   $('[data-page]').onchange=safe(()=>go(Number($('[data-page]').value)||1,false));
   $('[data-spread]').onchange=safe(paint);
-  async function setZoom(value){zoom=Math.max(1,Math.min(3,value));view.classList.toggle('zoomed',zoom>1);await paint()}
+  async function setZoom(value){zoom=Math.max(.5,Math.min(3,value));view.classList.toggle('zoomed',zoom>1);await paint()}
   $('[data-minus]').onclick=safe(()=>setZoom(zoom-.25));$('[data-plus]').onclick=safe(()=>setZoom(zoom+.25));$('[data-fit]').onclick=safe(()=>setZoom(1));
+  let wheelTimer;view.addEventListener('wheel',e=>{if(!doc||e.ctrlKey)return;e.preventDefault();zoom=Math.max(.5,Math.min(3,zoom+(e.deltaY<0?.1:-.1)));$('[data-zoom]').textContent=Math.round(zoom*100)+'%';clearTimeout(wheelTimer);wheelTimer=setTimeout(safe(()=>setZoom(zoom)),100)},{passive:false});
   d.addEventListener('keydown',e=>{if(e.target.closest('input,button')||e.ctrlKey||e.metaKey||e.altKey)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();safe(()=>turn(e.key==='ArrowRight'?1:-1))()}});
   let start=null;
   view.onpointerdown=e=>{if(e.button!==0||!doc)return;start={id:e.pointerId,x:e.clientX,y:e.clientY,left:view.scrollLeft,top:view.scrollTop};view.setPointerCapture(e.pointerId)};
@@ -78,7 +69,7 @@ export async function openBook(book, searchInfo, {toast, bytesOf}) {
   $('[data-download]').onclick=safe(async()=>{if(!doc)return;const bytes=await doc.getData(),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));a.download=book.file||book.title+'.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),30000)});
   const resize=()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(safe(paint),150)};window.addEventListener('resize',resize);
   $('[data-close]').onclick=()=>d.close();
-  d.addEventListener('close',()=>{closed=true;++renderId;++searchId;++thumbId;clearTimeout(resizeTimer);window.removeEventListener('resize',resize);tasks.forEach(t=>t.cancel());loading?.destroy();d.remove()},{once:true});
+  d.addEventListener('close',()=>{closed=true;++renderId;++searchId;++thumbId;clearTimeout(resizeTimer);clearTimeout(wheelTimer);window.removeEventListener('resize',resize);tasks.forEach(t=>t.cancel());loading?.destroy();d.remove()},{once:true});
   await safe(async()=>{
     const source=book.local||book.parts?{data:(await bytesOf(book)).slice()}:{url:'books/'+encodeURIComponent(book.file)};
     if(closed)return;
